@@ -1,19 +1,14 @@
 package wikiconsumer
 
 import (
+	"backend_bench/internal/model"
+	"backend_bench/internal/repository"
 	"bufio"
 	"encoding/json"
 	"fmt"
 	"net/http"
 	"strings"
 )
-
-type RecentChange struct {
-	ID        int64  `json:"id"`
-	User      string `json:"user"`
-	Bot       bool   `json:"bot"`
-	ServerURL string `json:"server_url"`
-}
 
 func StartWikiConsumer(streamURL string) {
 	fmt.Println("Connecting to:", streamURL)
@@ -47,8 +42,7 @@ func StartWikiConsumer(streamURL string) {
 		}
 
 		jsonData := strings.TrimSpace(strings.TrimPrefix(line, "data:"))
-		fmt.Println("Raw JSON:", jsonData)
-		var change RecentChange
+		var change model.RecentChange
 		if err := json.Unmarshal([]byte(jsonData), &change); err != nil {
 			continue
 		}
@@ -58,11 +52,24 @@ func StartWikiConsumer(streamURL string) {
 		}
 		seen[change.ID] = struct{}{}
 
-		fmt.Printf("ID: %d | User: %s | Bot: %t | Server URL: %s\n",
-			change.ID, change.User, change.Bot, change.ServerURL)
+		updateStats(change)
 	}
 
 	if err := scanner.Err(); err != nil {
 		fmt.Println("Scanner error:", err)
+	}
+}
+
+func updateStats(change model.RecentChange) {
+	repository.Stats.Lock()
+	defer repository.Stats.Unlock()
+
+	repository.Stats.TotalChanges++
+	repository.Stats.DistinctUsers[change.User] = struct{}{}
+	repository.Stats.DistinctUrl[change.ServerURL]++
+	if change.Bot {
+		repository.Stats.NumBots++
+	} else {
+		repository.Stats.NumNonBots++
 	}
 }
