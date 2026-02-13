@@ -19,7 +19,6 @@ func StartWikiConsumer(streamURL string) {
 		return
 	}
 
-	// Set headers for SSE and bot policy
 	req.Header.Set("Accept", "text/event-stream")
 	req.Header.Set("User-Agent", "backend-bench-dev")
 
@@ -32,7 +31,7 @@ func StartWikiConsumer(streamURL string) {
 
 	fmt.Println("Connected! Reading stream...")
 
-	seen := make(map[int64]struct{}) // track processed events
+	seen := make(map[int64]struct{})
 	scanner := bufio.NewScanner(resp.Body)
 
 	for scanner.Scan() {
@@ -47,12 +46,12 @@ func StartWikiConsumer(streamURL string) {
 			continue
 		}
 
-		if _, ok := seen[change.ID]; ok { // skip duplicates
+		if _, ok := seen[change.ID]; ok {
 			continue
 		}
 		seen[change.ID] = struct{}{}
 
-		updateStats(change)
+		UpdateStats(change)
 	}
 
 	if err := scanner.Err(); err != nil {
@@ -60,7 +59,7 @@ func StartWikiConsumer(streamURL string) {
 	}
 }
 
-func updateStats(change model.RecentChange) {
+func UpdateStats(change model.RecentChange) {
 	repository.Stats.Lock()
 	defer repository.Stats.Unlock()
 

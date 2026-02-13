@@ -13,10 +13,8 @@ import (
 func StartServer(config string) {
 	mux := http.NewServeMux()
 
-	//Register routes
 	routes.RegisterRoutes(mux)
 
-	//Initialize server
 	server := &http.Server{
 		Addr:         ":" + config,
 		Handler:      mux,
