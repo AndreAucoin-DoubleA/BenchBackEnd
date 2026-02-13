@@ -5,6 +5,5 @@ import (
 )
 
 func RegisterRoutes(mux *http.ServeMux) {
-	RegisterUsersRoutes(mux)
 	RegisterStatusRoutes(mux)
 }
