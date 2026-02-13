@@ -16,7 +16,9 @@ func GetConfig() model.Config {
 	}
 
 	port := os.Getenv("PORT")
+	stream := os.Getenv("STREAM_URL")
 	return model.Config{
-		Port: port,
+		Port:   port,
+		Stream: stream,
 	}
 }

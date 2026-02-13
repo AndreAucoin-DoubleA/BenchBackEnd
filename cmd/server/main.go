@@ -9,7 +9,7 @@ import (
 
 func main() {
 	config := config.GetConfig()
-	go wikiconsumer.StartWikiConsumer()
+	go wikiconsumer.StartWikiConsumer(config.Stream)
 	fmt.Printf("Server is running on port: %s\n", config.Port)
 	server.StartServer(config.Port)
 }
