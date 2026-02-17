@@ -7,8 +7,6 @@ http://localhost:7000/status: To see all the stats that have been consumed
 
 # 1. GoLang
 
-Task 1:
-
 - [x] Create a basic Go application that listens on port 7000 and has a status endpoint
 - [x] Create a process to consume the wikipedia recent changes stream https://stream.wikimedia.org/v2/stream/recentchange and log these to stdout.
 - [x] Replace the logs, with an in-memory /stats endpoint that a user can hit to get the latest stats on what we’ve processed
@@ -21,7 +19,7 @@ Task 1:
 - [x] Run tests with the race detector on (-race)
 
 
-Task 2: 
+# 2. Docker
 
 - [x] Create a  Dockerfile for your application
 - [x] Build & Run your dockerized application
