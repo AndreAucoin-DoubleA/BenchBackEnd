@@ -11,7 +11,7 @@ import (
 func GetConfig() model.Config {
 	err := godotenv.Load()
 	if err != nil {
-		log.Println("Warning: .env file could not be loaded")
+		log.Println("Warning: .env file could not be loaded in local environment")
 	}
 
 	port := os.Getenv("PORT")

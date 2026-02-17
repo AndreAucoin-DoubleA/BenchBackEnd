@@ -3,7 +3,7 @@ package main
 import (
 	"backend_bench/internal/config"
 	"backend_bench/internal/server"
-	wikiconsumer "backend_bench/internal/service/wikiConsumer"
+	wikiconsumer "backend_bench/internal/service/wikiconsumer"
 	"fmt"
 )
 

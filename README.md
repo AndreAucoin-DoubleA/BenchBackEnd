@@ -1,5 +1,10 @@
 # BenchBackEnd
 
+docker-compose up -d : To run application 
+
+http://localhost:7000/status: To see all the stats that have been consumed
+
+
 # 1. GoLang
 
 Task 1:
@@ -18,8 +23,8 @@ Task 1:
 
 Task 2: 
 
-- [] Create a  Dockerfile for your application
-- [] Build & Run your dockerized application
-- [] Build a scratch container image of your application
-- [] Use a file to set all the configurable items like ports, URLs and anything else that can be       dynamic, load these configs via the file
+- [x] Create a  Dockerfile for your application
+- [x] Build & Run your dockerized application
+- [x] Build a scratch container image of your application
+- [x] Use a file to set all the configurable items like ports, URLs and anything else that can be       dynamic, load these configs via the file
 

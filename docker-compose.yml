@@ -1,0 +1,10 @@
+version: "3.9"
+
+services:
+  wikiconsumer:
+    build: .
+    container_name: wikiconsumer
+    ports:
+      - "7000:7000"
+    env_file:
+      - .env
