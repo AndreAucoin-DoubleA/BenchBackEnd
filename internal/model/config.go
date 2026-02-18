@@ -6,4 +6,5 @@ type Config struct {
 	CassandraPort int
 	CassandraHost string
 	KeyspaceKey   string
+	JWTSecret     string
 }

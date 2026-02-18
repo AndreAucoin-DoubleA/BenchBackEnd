@@ -5,7 +5,7 @@ import (
 
 	"backend_bench/internal/model"
 	"backend_bench/internal/repository"
-	wikiconsumer "backend_bench/internal/service/wikiconsumer"
+	"backend_bench/internal/service/wikiconsumer"
 )
 
 func TestUpdateStats(t *testing.T) {

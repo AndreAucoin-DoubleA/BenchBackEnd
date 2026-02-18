@@ -1,6 +1,7 @@
 package server
 
 import (
+	"backend_bench/internal/model"
 	"backend_bench/internal/routes"
 	"context"
 	"log"
@@ -10,10 +11,10 @@ import (
 	"time"
 )
 
-func StartServer(config string) {
+func StartServer(config string, repo *model.UserRepository, jwtSecret string) {
 	mux := http.NewServeMux()
 
-	routes.RegisterRoutes(mux)
+	routes.RegisterRoutes(mux, repo, jwtSecret)
 
 	server := &http.Server{
 		Addr:         ":" + config,

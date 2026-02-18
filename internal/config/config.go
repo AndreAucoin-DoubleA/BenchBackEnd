@@ -21,6 +21,8 @@ func GetConfig() model.Config {
 	cassandraPortStr := os.Getenv("CASSANDRA_PORT")
 	cassandraPort, err := strconv.Atoi(cassandraPortStr)
 	keyspaceKey := os.Getenv("KEYSPACE")
+	jwtSecret := os.Getenv("JWT_SECRET")
+
 	if err != nil {
 		log.Fatalf("Invalid CASSANDRA_PORT: %v", err)
 	}
@@ -31,5 +33,6 @@ func GetConfig() model.Config {
 		CassandraPort: cassandraPort,
 		CassandraHost: cassandraHost,
 		KeyspaceKey:   keyspaceKey,
+		JWTSecret:     jwtSecret,
 	}
 }

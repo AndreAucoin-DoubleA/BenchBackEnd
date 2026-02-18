@@ -58,14 +58,50 @@ func ConnectToCassandra(host string, port int, keyspace string) *gocql.Session {
 	}
 	log.Println("Connected to Cassandra with keyspace:", keyspace)
 
-	// Create tables
 	err = session.Query(`
 		CREATE TABLE IF NOT EXISTS user_by_email (
-			email TEXT PRIMARY KEY,
+			email TEXT,
 			id UUID,
-			username TEXT,
 			password_hash TEXT,
-			created_at TIMESTAMP
+			created_at TEXT,
+			PRIMARY KEY(email)
+		);
+	`).Exec()
+	if err != nil {
+		log.Fatal("Failed creating table:", err)
+	}
+
+	// Create tables
+	err = session.Query(`
+		CREATE TABLE IF NOT EXISTS wiki_url_stats (
+			stat_date TEXT,
+			url TEXT,
+			count counter,
+			PRIMARY KEY (stat_date, url)
+		);
+	`).Exec()
+	if err != nil {
+		log.Fatal("Failed creating table:", err)
+	}
+
+	err = session.Query(`
+		CREATE TABLE IF NOT EXISTS wiki_users_stats (
+			stat_date TEXT,
+    		username TEXT,
+    		PRIMARY KEY (stat_date, username)
+		);
+	`).Exec()
+	if err != nil {
+		log.Fatal("Failed creating table:", err)
+	}
+
+	err = session.Query(`
+		CREATE TABLE IF NOT EXISTS wiki_total_stats (
+			stat_date TEXT,
+			total_changes counter,
+			num_bots counter,
+			num_non_bots counter,
+			PRIMARY KEY (stat_date)
 		);
 	`).Exec()
 	if err != nil {
