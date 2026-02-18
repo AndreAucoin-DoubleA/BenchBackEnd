@@ -2,6 +2,7 @@ package main
 
 import (
 	"backend_bench/internal/config"
+	"backend_bench/internal/db"
 	"backend_bench/internal/server"
 	wikiconsumer "backend_bench/internal/service/wikiconsumer"
 	"fmt"
@@ -9,6 +10,8 @@ import (
 
 func main() {
 	config := config.GetConfig()
+	session := db.ConnectToCassandra(config.CassandraHost, config.CassandraPort, config.KeyspaceKey)
+	defer session.Close()
 	go wikiconsumer.StartWikiConsumer(config.Stream)
 	fmt.Printf("Server is running on port: %s\n", config.Port)
 	server.StartServer(config.Port)

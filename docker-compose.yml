@@ -1,10 +1,22 @@
 version: "3.9"
 
 services:
-  wikiconsumer:
-    build: .
-    container_name: wikiconsumer
+  cassandra:
+    image: cassandra:4.1
+    container_name: cassandra
     ports:
-      - "7000:7000"
+      - "9042:9042"
+    volumes:
+      - cassandra_data:/var/lib/cassandra
+
+  app:
+    build: .
+    depends_on:
+      - cassandra
     env_file:
       - .env
+    ports:
+      - "7000:7000"
+
+volumes:
+  cassandra_data:
